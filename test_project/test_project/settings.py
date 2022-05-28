@@ -37,6 +37,7 @@ CORS_ORIGIN_WHITELIST = (
 
 INSTALLED_APPS = [
     'rest_framework',
+    'demoweb.apps.DemowebConfig',
     'demoapp.apps.DemoappConfig',
     'django.contrib.admin',
     'django.contrib.auth',

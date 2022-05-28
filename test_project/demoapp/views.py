@@ -9,6 +9,10 @@ from rest_framework import status
 
 from demoapp.models import Cars
 from demoapp.serializers import CarSerializer
+from demoweb.models import Theater
+from demoweb.models import TagName
+from demoweb.serializers import TheaterSerializer
+from demoweb.serializers import TagNameSerializer
 # Create your views here.
 
 @csrf_exempt
@@ -24,3 +28,17 @@ def cars_list(request):
         car_data = Cars.objects.all()
         car_serializer = CarSerializer(car_data, many = True)
         return JsonResponse(car_serializer.data, safe = False)
+
+
+@csrf_exempt
+def getData(request):
+    if request.method == 'GET':
+        tagData = TagName.objects.all()
+        tag = request.GET.get('tag', None)
+        if tag is not None:
+            
+            tagData = tagData.filter(tag__icontains=tag)
+
+        tSerializer = TagNameSerializer( tagData, many=True)
+        return JsonResponse(tSerializer.data, safe = False)
+        # return JsonResponse(tSerializer.errors, status = status.HTTP_400_BAD_REQUEST)
